@@ -12,7 +12,7 @@ class HoneypotFileHandler(EventHandler):
         logs_str = ""
         for log in logs:
             logs_str += log.as_string
-        if "key=\"honeypot_file\"" in logs_str and "type=CONFIG_CHANGE" not in logs_str:
+        if "key=\"filesystem\"" in logs_str and "type=CONFIG_CHANGE" not in logs_str:
             return True
         return False
 
