@@ -57,6 +57,6 @@ class HoneypotFileHandler(EventHandler):
                 proctitle_params = params
 
         file_path = path_utils.get_file_path(path_params['name'], cwd_params['cwd'])
-        command = _proctitle_to_command(proctitle_params)
+        command = _proctitle_to_command(proctitle_params['proctitle'])
         alert = "honeypot hit! " + file_path + " by " + syscall_params['UID'] + " using: `" + command + "`"
         DiscordWebhookNotifier.notify(alert)
