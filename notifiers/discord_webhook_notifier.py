@@ -1,7 +1,7 @@
 import requests
 
 from core.notifier import Notifier
-from config import DiscordWebhookNotifierConfig
+from config.config import DiscordWebhookNotifierConfig
 
 
 class DiscordWebhookNotifier(Notifier):
@@ -20,7 +20,6 @@ class DiscordWebhookNotifier(Notifier):
                 "icon_url": "https://cdn.wallpapersafari.com/34/84/xkItg7.jpg"
             }
         }
-
         try:
             response = requests.post(
                 DiscordWebhookNotifierConfig.DISCORD_WEBHOOK_URL,
