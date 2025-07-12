@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import argparse
 
 from config import GeneralConfig, PathConfig
