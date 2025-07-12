@@ -5,6 +5,7 @@ from core.event_handler import EventHandler
 from core.log import Log
 import utils.path_utils as path_utils
 from notifiers.discord_webhook_notifier import DiscordWebhookNotifier
+from config import NotifierConfig
 
 def _proctitle_to_command(proctitle: str) -> str:
     try:
@@ -58,8 +59,5 @@ class HoneypotFileHandler(EventHandler):
 
         file_path = path_utils.get_file_path(path_params['name'], cwd_params['cwd'])
         command = _proctitle_to_command(proctitle_params['proctitle'])
-        alert = {
-            "title": "File System",
-            "description": file_path + " has been accessed by " + syscall_params['UID'] + " using: `" + command + "`",
-        }
-        DiscordWebhookNotifier.notify(alert)
+        alert = file_path + " has been accessed by " + syscall_params['UID'] + " using: `" + command + "`"
+        NotifierConfig.NOTIFIER.notify("File System", alert)

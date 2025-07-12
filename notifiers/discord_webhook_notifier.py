@@ -6,15 +6,13 @@ from config import DiscordWebhookNotifierConfig
 
 class DiscordWebhookNotifier(Notifier):
     @staticmethod
-    def notify(message: dict):
+    def notify(sender: str, message: str):
         """
         Sends a Discord Webhook notification.
-        :param message: dictionary containing: a title, a description
         """
         embed = {
-            "title": message['title'],
-            "type": "LOL",
-            "description": message['description'],
+            "title": sender,
+            "description": message,
             "color": 16711935,
             "author": {
                 "name": "Hived",
