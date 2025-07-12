@@ -1,10 +1,10 @@
+import sys
+
 from config import PathConfig
 from core.event_handler import EventHandler
 from core.observer import Subject
-from core.log import Log
+from core.event import Log, Event
 from utils.import_utils import dynamic_import
-
-import sys
 
 
 class AudispdListener(Subject):
@@ -12,36 +12,30 @@ class AudispdListener(Subject):
         super().__init__()
         self._load_handlers()
 
-    def _notify_observers(self, subject : list[Log]):
-        for o in self._observers:
-            o.handle(subject)
-
     def _load_handlers(self):
         handlers = dynamic_import(EventHandler, PathConfig.HANDLERS_DIR)
         [self.add_observer(h()) for h in handlers]
 
+    def _notify_observers(self, event: Event):
+        for o in self._observers:
+            o.handle(event)
+
     def listen(self):
-        logs = ""
+        logs: list[Log] = []
         first = True
         for line in sys.stdin:
-            if first and 'type=SYSCALL' not in line:
+            log = Log(line)
+            if first and log.get_type() == 'SYSCALL':
                 continue
-            if first and 'type=SYSCALL' in line:
+            if first and log.get_type() == 'SYSCALL':
                 first = False
-                logs += line
+                logs.append(log)
                 continue
-            if not first and 'type=EOE' in line:
-                self.handle_event(logs)
-                logs = ""
+            if not first and log.get_type() == 'EOE':
+                self._notify_observers(Event(logs))
+                logs = []
                 first = True
                 continue
-            if not first and 'type=EOE' not in line:
-                logs += line
+            if not first and log.get_type() == 'EOE':
+                logs.append(log)
                 continue
-
-    def handle_event(self, logs: str):
-        new_logs : list[Log] = []
-        for log in logs.split('\n'):
-            if log == '': continue
-            new_logs.append(Log(log))
-        self._notify_observers(new_logs)
