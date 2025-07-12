@@ -1,6 +1,8 @@
 import os
 from dotenv import load_dotenv
 
+from notifiers.discord_webhook_notifier import DiscordWebhookNotifier
+
 load_dotenv()
 
 class GeneralConfig:
@@ -13,6 +15,9 @@ class PathConfig:
     CWD = os.getcwd()
     PLUGINS_DIR = '/home/arianne/personal_dev/hived/plugins'
     HANDLERS_DIR = '/home/arianne/personal_dev/hived/handlers'
+
+class NotifierConfig:
+    NOTIFIER = DiscordWebhookNotifier
 
 
 class DiscordWebhookNotifierConfig:
