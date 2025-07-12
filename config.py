@@ -1,10 +1,8 @@
 import os
-from dotenv import load_dotenv
 
-load_dotenv()
 
 class GeneralConfig:
-    VERSION = '0.0.1'
+    VERSION = '0.01'
 
 
 class PathConfig:
@@ -16,4 +14,4 @@ class PathConfig:
 
 
 class DiscordWebhookNotifierConfig:
-    DISCORD_WEBHOOK_URL = os.getenv('DISCORD_WEBHOOK')
+    DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1343394186401021992/vFurn7zdOnh04Ce7KBJa-o6KsFAstKQMLnNiWoguTy4iQO9LI3ZSHlgmHddAZTSkylDE"
