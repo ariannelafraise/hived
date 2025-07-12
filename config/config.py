@@ -1,7 +1,6 @@
 import os
 from dotenv import load_dotenv
 
-from notifiers.discord_webhook_notifier import DiscordWebhookNotifier
 
 load_dotenv()
 
