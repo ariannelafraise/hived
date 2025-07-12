@@ -2,7 +2,7 @@
 
 import argparse
 
-from config import GeneralConfig, PathConfig
+from config.config import GeneralConfig, PathConfig
 from core.plugin import Plugin
 from utils.import_utils import dynamic_import
 

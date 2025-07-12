@@ -1,12 +1,16 @@
 #!/usr/bin/python
 
 import argparse
+import traceback
 
-from config import GeneralConfig
+from config.config import GeneralConfig
 from audispd_listener import AudispdListener
 
 def start_daemon():
-    AudispdListener().listen()
+    try:
+        AudispdListener().listen()
+    except:
+        print(traceback.format_exc())
 
 def handle_command(arguments: argparse.Namespace):
     if arguments.start:

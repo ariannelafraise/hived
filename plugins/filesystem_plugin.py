@@ -4,7 +4,7 @@ import sys
 import subprocess
 
 from core.plugin import Plugin
-from config import PathConfig
+from config.config import PathConfig
 
 VERSION = "0.0.2"
 PLUGIN_NAME = "FileSystem"

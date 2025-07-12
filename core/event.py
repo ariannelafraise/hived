@@ -23,7 +23,7 @@ class Log:
         """
         params = {}
         for param in self.as_string.split(' '):
-            key_value = param.replace('\"', '').split('=')
+            key_value = param.replace('\"', '').replace('\n', '').split('=')
             if key_value[0] != 'key':
                 params[key_value[0]] = key_value[1]
         return params

@@ -1,9 +1,10 @@
 import sys
 
-from config import PathConfig
+from config.config import PathConfig
 from core.event_handler import EventHandler
 from core.observer import Subject
 from core.event import Log, Event
+from notifiers.discord_webhook_notifier import DiscordWebhookNotifier
 from utils.import_utils import dynamic_import
 
 
@@ -14,7 +15,7 @@ class AudispdListener(Subject):
 
     def _load_handlers(self):
         handlers = dynamic_import(EventHandler, PathConfig.HANDLERS_DIR)
-        [self.add_observer(h()) for h in handlers]
+        [self.add_observer(h(DiscordWebhookNotifier)) for h in handlers]
 
     def _notify_observers(self, event: Event):
         for o in self._observers:
@@ -25,7 +26,7 @@ class AudispdListener(Subject):
         first = True
         for line in sys.stdin:
             log = Log(line)
-            if first and log.get_type() == 'SYSCALL':
+            if first and log.get_type() != 'SYSCALL':
                 continue
             if first and log.get_type() == 'SYSCALL':
                 first = False
@@ -36,6 +37,6 @@ class AudispdListener(Subject):
                 logs = []
                 first = True
                 continue
-            if not first and log.get_type() == 'EOE':
+            if not first and log.get_type() != 'EOE':
                 logs.append(log)
                 continue
