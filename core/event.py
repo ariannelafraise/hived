@@ -1,4 +1,8 @@
 class Log:
+    """
+    A log is formed as follows: "key=value key2=value2". They all have their own type to differentiate them.
+    ex: SYSCALL, CWD, PATH, EOE. A set of logs forms an event
+    """
     def __init__(self, log_string : str):
         self.as_string = log_string
         self.attributes = self._parse_params()
