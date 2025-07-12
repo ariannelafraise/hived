@@ -1,3 +1,5 @@
+#!/usr/bin/bash
+
 import argparse
 
 from config import GeneralConfig, PathConfig
