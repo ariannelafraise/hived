@@ -4,7 +4,7 @@ import sys
 import subprocess
 
 from core.plugin import Plugin
-from config.config import PathConfig
+from config import PathConfig
 
 VERSION = "0.0.2"
 PLUGIN_NAME = "FileSystem"
@@ -42,7 +42,7 @@ def _clear_rules():
 
 class FileSystemPlugin(Plugin):
     @staticmethod
-    def init_args_parser(subparser):
+    def init_args_parser(subparser: argparse._SubParsersAction):
         parser = subparser.add_parser(PLUGIN_NAME.lower())
         parser.set_defaults(func=FileSystemPlugin.handle_command)
         group = parser.add_mutually_exclusive_group(required=True)

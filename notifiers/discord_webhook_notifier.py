@@ -1,8 +1,11 @@
+import os
+from dotenv import load_dotenv
 import requests
 
 from core.notifier import Notifier
-from config.config import DiscordWebhookNotifierConfig
 
+load_dotenv()
+URL = os.getenv('DISCORD_WEBHOOK_URL')
 
 class DiscordWebhookNotifier(Notifier):
     @staticmethod
@@ -20,9 +23,10 @@ class DiscordWebhookNotifier(Notifier):
                 "icon_url": "https://cdn.wallpapersafari.com/34/84/xkItg7.jpg"
             }
         }
+
         try:
             response = requests.post(
-                DiscordWebhookNotifierConfig.DISCORD_WEBHOOK_URL,
+                URL,
                 json={'embeds': [embed]},
                 headers={'Content-Type': 'application/json'}
             )

@@ -4,24 +4,21 @@ import codecs
 from core.event_handler import EventHandler
 from core.event import Event
 import utils.path_utils as path_utils
-from core.notifier import Notifier
+from notifiers.discord_webhook_notifier import DiscordWebhookNotifier
 
 
 def _proctitle_to_command(proctitle: str) -> str:
+    print(proctitle)
     try:
         return codecs.decode(
             proctitle.replace('00', '20'),
             'hex'
         ).decode('utf-8')
-    except binascii.Error as e:
-        print(e)
+    except binascii.Error:
         return proctitle
 
 
-class HoneypotFileHandler(EventHandler):
-    def __init__(self, notifier: Notifier):
-        super().__init__(notifier)
-
+class FileSystemEventHandler(EventHandler):
     def _applies_to(self, event: Event) -> bool:
         logs_str = ""
         for log in event.logs:
@@ -48,7 +45,8 @@ class HoneypotFileHandler(EventHandler):
                     path = log
                 case "PROCTITLE":
                     proctitle = log
+
         file_path = path_utils.get_file_path(path.attributes['name'], cwd.attributes['cwd'])
         command = _proctitle_to_command(proctitle.attributes['proctitle'])
         alert = file_path + " has been accessed by " + syscall.attributes['UID'] + " using: `" + command + "`"
-        self._notifier.notify("File System", alert)
+        DiscordWebhookNotifier.notify("File System", alert)
