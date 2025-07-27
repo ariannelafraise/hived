@@ -10,9 +10,9 @@ from utils.import_utils import dynamic_import
 class AudispdListener(Subject):
     def __init__(self):
         super().__init__()
-        self._load_handlers()
+        self._load_event_handlers()
 
-    def _load_handlers(self):
+    def _load_event_handlers(self):
         handlers = dynamic_import(EventHandler, PathConfig.HANDLERS_DIR)
         [self.add_observer(h()) for h in handlers]
 
@@ -23,19 +23,22 @@ class AudispdListener(Subject):
     def listen(self):
         logs: list[Log] = []
         first = True
+
         for line in sys.stdin:
             log = Log(line)
-            if first and log.get_type() == 'SYSCALL':
-                continue
+            print(log.get_type())
+
             if first and log.get_type() == 'SYSCALL':
                 first = False
                 logs.append(log)
                 continue
+
             if not first and log.get_type() == 'EOE':
                 self._notify_observers(Event(logs))
                 logs = []
                 first = True
                 continue
-            if not first and log.get_type() == 'EOE':
+
+            if not first and log.get_type() != 'EOE':
                 logs.append(log)
                 continue

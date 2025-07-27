@@ -44,7 +44,7 @@ class HoneypotFileHandler(EventHandler):
                 case "PROCTITLE":
                     proctitle = log
 
-        file_path = path_utils.get_file_path(path.attributes['name'], cwd['cwd'])
-        command = _proctitle_to_command(proctitle['proctitle'])
-        alert = file_path + " has been accessed by " + syscall['UID'] + " using: `" + command + "`"
+        file_path = path_utils.get_file_path(path.attributes['name'], cwd.attributes['cwd'])
+        command = _proctitle_to_command(proctitle.attributes['proctitle'])
+        alert = file_path + " has been accessed by " + syscall.attributes['UID'] + " using: `" + command + "`"
         NotifierConfig.NOTIFIER.notify("File System", alert)

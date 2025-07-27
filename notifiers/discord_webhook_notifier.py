@@ -1,8 +1,11 @@
+import os
+from dotenv import load_dotenv
 import requests
 
 from core.notifier import Notifier
-from config import DiscordWebhookNotifierConfig
 
+load_dotenv()
+URL = os.getenv('DISCORD_WEBHOOK_URL')
 
 class DiscordWebhookNotifier(Notifier):
     @staticmethod
@@ -23,7 +26,7 @@ class DiscordWebhookNotifier(Notifier):
 
         try:
             response = requests.post(
-                DiscordWebhookNotifierConfig.DISCORD_WEBHOOK_URL,
+                URL,
                 json={'embeds': [embed]},
                 headers={'Content-Type': 'application/json'}
             )

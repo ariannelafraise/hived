@@ -1,9 +1,7 @@
 import os
-from dotenv import load_dotenv
 
 from notifiers.discord_webhook_notifier import DiscordWebhookNotifier
 
-load_dotenv()
 
 class GeneralConfig:
     VERSION = '0.0.2'
@@ -19,7 +17,3 @@ class PathConfig:
 
 class NotifierConfig:
     NOTIFIER = DiscordWebhookNotifier
-
-
-class DiscordWebhookNotifierConfig:
-    DISCORD_WEBHOOK_URL = os.getenv('DISCORD_WEBHOOK')
