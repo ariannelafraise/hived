@@ -12,8 +12,5 @@ class PathConfig:
     LOG_FILE_PATH = '/var/log/audit/audit.log'
     CWD = os.getcwd()
     PLUGINS_DIR = '/home/arianne/personal_dev/hived/plugins'
-    HANDLERS_DIR = '/home/arianne/personal_dev/hived/handlers'
+    HANDLERS_DIR = '/home/arianne/personal_dev/hived/event_handlers'
 
-
-class NotifierConfig:
-    NOTIFIER = DiscordWebhookNotifier

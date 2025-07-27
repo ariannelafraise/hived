@@ -6,7 +6,7 @@ from core.observer import Observer
 
 class EventHandler(Observer, ABC):
     """
-    Interface for creating event handlers. They are automatically loaded by AudispdListener.
+    Interface for creating event event_handlers. They are automatically loaded by AudispdListener.
     """
     @abstractmethod
     def _applies_to(self, event: Event) -> bool:

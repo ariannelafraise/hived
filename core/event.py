@@ -15,7 +15,7 @@ class Log:
     """
     def __init__(self, log_string : str):
         self.as_string = Log._clean_string(log_string)
-        self.attributes = Log._parse_params(log_string)
+        self.attributes = Log._parse_params(self.as_string)
 
     @staticmethod
     def _clean_string(log_string : str) -> str:
