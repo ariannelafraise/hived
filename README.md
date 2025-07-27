@@ -1,5 +1,5 @@
 # Hived
-Hived is a extensible tool built on top of Auditd that helps to setup honeypots on your linux machines.
+Hived is a extensible tool built on top of the Linux Audit framework that helps to setup honeypots on your linux machines.
 It provides an extension/plugin API, to add custom features.
 
 ## Context
@@ -99,7 +99,7 @@ Get help on Hivectl usage:
 
 ## Plugin/Extension API
 > [!IMPORTANT]
-> Refer to the UML class diagram showed earlier to better understand this section.
+> Refer to the UML class diagram shown earlier to better understand this section.
 
 There are three ways of adding your own functionalities: event handlers, notifiers and hivectl plugins.
 ### Event handlers
