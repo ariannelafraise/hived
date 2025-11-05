@@ -3,10 +3,10 @@
 import argparse
 
 from config import GeneralConfig
-from audispd_listener import AudispdListener
+from audispd_listener import AudispListener
 
 def start_daemon():
-    AudispdListener().listen()
+    AudispListener().listen()
 
 def handle_command(arguments: argparse.Namespace):
     if arguments.start:

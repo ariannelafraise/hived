@@ -7,7 +7,7 @@ from core.event import Log, Event
 from utils.import_utils import dynamic_import
 
 
-class AudispdListener(Subject):
+class AudispListener(Subject):
     def __init__(self):
         super().__init__()
         self._load_event_handlers()
