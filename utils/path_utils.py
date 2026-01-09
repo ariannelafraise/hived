@@ -9,6 +9,7 @@ def get_file_path(path: str, cwd: str) -> str:
         return clean_absolute_path(path)
     return relative_to_absolute_path(path, cwd)
 
+
 def relative_to_absolute_path(relative_path: str, cwd: str) -> str:
     """
     Convert a relative path and current working directory into an absolute path.
@@ -20,15 +21,16 @@ def relative_to_absolute_path(relative_path: str, cwd: str) -> str:
     relative_array = relative_path.split("/")
     for item in relative_array:
         match item:
-            case '..':
+            case "..":
                 cwd_array.pop()
-            case '.':
+            case ".":
                 continue
-            case '':
+            case "":
                 continue
             case _:
                 cwd_array.append(item)
-    return '/'.join(cwd_array)
+    return "/".join(cwd_array)
+
 
 def clean_absolute_path(path: str) -> str:
     """
@@ -37,13 +39,13 @@ def clean_absolute_path(path: str) -> str:
     :return: cleaned absolute path
     """
     path_array = path.split("/")
-    for index, item  in enumerate(path_array):
+    for index, item in enumerate(path_array):
         match item:
-            case '..':
+            case "..":
                 path_array.pop(index - 1)
                 path_array.pop(index - 1)
-            case '.' | '':
+            case "." | "":
                 path_array.pop(index)
             case _:
                 continue
-    return '/' + '/'.join(path_array)
+    return "/" + "/".join(path_array)

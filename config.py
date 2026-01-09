@@ -1,16 +1,13 @@
 import os
 
-from notifiers.discord_webhook_notifier import DiscordWebhookNotifier
-
 
 class GeneralConfig:
-    VERSION = '0.0.2'
+    VERSION = "0.0.2"
 
 
 class PathConfig:
-    RULES_FILE_PATH = '/etc/audit/rules.d/honeypot.rules'
-    LOG_FILE_PATH = '/var/log/audit/audit.log'
+    RULES_FILE_PATH = "/etc/audit/rules.d/honeypot.rules"
+    LOG_FILE_PATH = "/var/log/audit/audit.log"
     CWD = os.getcwd()
-    PLUGINS_DIR = '/home/arianne/personal_dev/hived/plugins'
-    HANDLERS_DIR = '/home/arianne/personal_dev/hived/event_handlers'
-
+    PLUGINS_DIR = "/home/arianne/personal_dev/hived/plugins"
+    HANDLERS_DIR = "/home/arianne/personal_dev/hived/plugins"

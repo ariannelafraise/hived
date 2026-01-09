@@ -1,24 +1,44 @@
 #!/usr/bin/python
 
 import argparse
+import traceback
 
+from audisp_listener import AudispListener
 from config import GeneralConfig
-from audispd_listener import AudispListener
+from core.logger import Logger
+
+logger = Logger("Hived")
+
 
 def start_daemon():
+    logger.info("Hived has been started")
     AudispListener().listen()
+
 
 def handle_command(arguments: argparse.Namespace):
     if arguments.start:
-        start_daemon()
+        try:
+            start_daemon()
+        except Exception as _:
+            logger.error_traceback(
+                f"something went wrong: {traceback.format_exc()} --- End of Traceback ---"
+            )
+
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Hived')
+    parser = argparse.ArgumentParser(description="Hived")
     parser.set_defaults(func=handle_command)
     group = parser.add_mutually_exclusive_group(required=False)
-    group.add_argument('-v', '--version', help='View currently installed version.', action='version',
-                       version=f"v{GeneralConfig.VERSION}")
-    group.add_argument('-s', '--start', help="Start the hived daemon", action='store_true')
+    group.add_argument(
+        "-v",
+        "--version",
+        help="View currently installed version.",
+        action="version",
+        version=f"v{GeneralConfig.VERSION}",
+    )
+    group.add_argument(
+        "-s", "--start", help="Start the hived daemon", action="store_true"
+    )
 
     args = parser.parse_args()
     args.func(args)

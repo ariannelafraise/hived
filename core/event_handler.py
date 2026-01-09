@@ -1,13 +1,14 @@
 from abc import ABC, abstractmethod
 
 from core.event import Event
-from core.observer import Observer
+from core.observer import EventObserver
 
 
-class EventHandler(Observer, ABC):
+class EventHandler(EventObserver, ABC):
     """
-    Interface for creating event event_handlers. They are automatically loaded by AudispdListener.
+    Interface for creating event handlers. They are automatically loaded by AudispdListener.
     """
+
     @abstractmethod
     def _applies_to(self, event: Event) -> bool:
         """
@@ -17,7 +18,7 @@ class EventHandler(Observer, ABC):
         pass
 
     @abstractmethod
-    def handle(self, event: Event):
+    def handle(self, event: Event) -> None:
         """
         Called by AudispdListener on every event. Must call _applies_to().
         :param event: an event received by AudispdListener
