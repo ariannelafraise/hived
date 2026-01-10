@@ -7,7 +7,7 @@ from logging import Logger
 from logging.handlers import RotatingFileHandler
 from pathlib import Path
 
-from config import PathConfig
+from core.config import PathConfig
 
 # Setup logs directory
 logs_dir_path = PathConfig.LOGS_DIR

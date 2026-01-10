@@ -6,8 +6,7 @@ from core.observer import AuditEventObserver
 
 class AuditEventHandler(AuditEventObserver, ABC):
     """
-    Interface for creating audit event handlers. They are automatically
-    and dynamically loaded by all AuditEventDispatcher.
+    Interface for creating audit event handlers.
 
     Also referred to as module.
     """

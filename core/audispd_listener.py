@@ -9,6 +9,10 @@ class AudispdListener(AuditEventDispatcher):
         super().__init__()
 
     def listen(self) -> None:
+        """
+        Listens for audit logs sent by Audispd in stdin and forwards them to its observers.
+        Logically ties records of the same event.
+        """
         records: list[AuditRecord] = []
         first = True
         current_event_timestamp = ""

@@ -4,7 +4,7 @@ import core.hived_logger as hived_logger
 import utils.translations as translations
 from core.audit_event import AuditEvent, AuditRecord
 from core.audit_event_handler import AuditEventHandler
-from notifiers.discord_webhook_notifier import DiscordWebhookNotifier
+from core.config import NotifierConfig
 
 
 class FileSystemEvent:
@@ -58,7 +58,7 @@ class FileSystemEvent:
         syscall_uid = self.syscall.get_field_value("uid")
         syscall_syscall = self.syscall.get_field_value("syscall")
 
-        command = translations.proctitle_to_command(proctitle_proctitle)
+        command = translations.proctitle_to_readable(proctitle_proctitle)
         username = translations.uid_to_username(syscall_uid)
         syscall_name = translations.syscall_number_to_name(syscall_syscall)
         path = ""
@@ -104,4 +104,4 @@ class FileSystemEventHandler(AuditEventHandler):
             "FileSystemEventHandler",
         )
 
-        DiscordWebhookNotifier.notify("File System", str(FileSystemEvent(event)))
+        NotifierConfig.notifier.notify("File System", str(FileSystemEvent(event)))

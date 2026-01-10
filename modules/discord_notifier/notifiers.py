@@ -1,36 +1,19 @@
-import os
-
 import requests
-from dotenv import load_dotenv
 
 from core.notifier import Notifier
-
-load_dotenv()
-URL = os.getenv("DISCORD_WEBHOOK_URL")
+from modules.discord_notifier.config import DiscordNotifierConfig
 
 
 class DiscordWebhookNotifier(Notifier):
-    @staticmethod
-    def notify(sender: str, message: str):
+    def notify(self, sender: str, message: str):
         """
         Sends a Discord Webhook notification.
         """
-        embed = {
-            "title": sender,
-            "description": message,
-            "color": 16711935,
-            "author": {
-                "name": "Hived",
-                "url": "https://github.com/ariannelafraise/hived",
-                "icon_url": "https://cdn.wallpapersafari.com/34/84/xkItg7.jpg",
-            },
-        }
+        embed = {"title": sender, "description": message, "color": 16711935}
 
         try:
-            if not URL:
-                raise ValueError("Discord Webhook URL not set")
             response = requests.post(
-                URL,
+                DiscordNotifierConfig.webhook_url,
                 json={"embeds": [embed]},
                 headers={"Content-Type": "application/json"},
             )

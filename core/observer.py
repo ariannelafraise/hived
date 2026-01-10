@@ -48,5 +48,4 @@ class AuditEventObserver(ABC):
         """
         Handle an audit event.
         """
-        print("test")
         pass

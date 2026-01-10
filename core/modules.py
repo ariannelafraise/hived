@@ -2,8 +2,9 @@ import importlib.util
 import inspect
 import os
 
-from config import PathConfig
 from core.audit_event_handler import AuditEventHandler
+from core.config import PathConfig
+from core.notifier import Notifier
 from core.plugin import Plugin
 
 
@@ -38,6 +39,10 @@ def _dynamic_import(base_class: type, file_name: str) -> dict[str, type]:
             continue
 
         file_path = f"{modules_dir}/{module}/{file_name}"
+
+        if not os.path.isfile(file_path):
+            continue
+
         module_type_name = file_name.split(".")[0]
 
         spec = importlib.util.spec_from_file_location(module_type_name, file_path)
@@ -82,3 +87,17 @@ def import_event_handlers() -> list[AuditEventHandler]:
         if issubclass(handler, AuditEventHandler):
             instantiated_handlers.append(handler())
     return instantiated_handlers
+
+
+def import_notifiers() -> list[Notifier]:
+    """
+    Imports all notifiers and returns them into a list.
+    Notifiers are looked for in subfolders of the 'modules' directory,
+    in 'notifiers.py' files.
+    """
+    imported_notifiers = _dynamic_import(Notifier, "notifiers.py")
+    instantiated_notifiers: list[Notifier] = []
+    for _, notifier in imported_notifiers.items():
+        if issubclass(notifier, Notifier):
+            instantiated_notifiers.append(notifier())
+    return instantiated_notifiers

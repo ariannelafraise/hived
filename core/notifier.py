@@ -3,13 +3,18 @@ from abc import ABC, abstractmethod
 
 class Notifier(ABC):
     """
-    TODO
+    Interface for creating notifiers.
+
+    Also referred to as module.
     """
 
-    @staticmethod
     @abstractmethod
-    def notify(sender: str, message: str) -> None:
+    def notify(self, sender: str, message: str) -> None:
         """
-        TODO
+        Sends a notification.
+
+        Parameters:
+            sender: the sender of the notification
+            message: the message of the notification
         """
         pass

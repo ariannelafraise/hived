@@ -3,7 +3,7 @@ import subprocess
 from abc import ABC, abstractmethod
 from pathlib import Path
 
-from config import PathConfig
+RULES_DIR_PATH = "/etc/audit/rules.d"
 
 
 class Plugin(ABC):
@@ -27,10 +27,7 @@ class Plugin(ABC):
             name: the name of the plugin
         """
         self._name = name
-        rules_dir_path = PathConfig.RULES_DIR
-        if rules_dir_path[-1] == "/":
-            rules_dir_path = rules_dir_path[:-1]
-        self._rules_file_path = f"{rules_dir_path}/{self._name}.rules"
+        self._rules_file_path = f"{RULES_DIR_PATH}/{self._name}.rules"
         if not self._rules_file_exists:
             self._create_rules_file
 
