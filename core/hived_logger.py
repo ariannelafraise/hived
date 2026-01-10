@@ -1,15 +1,21 @@
 from __future__ import annotations
 
 import logging
+import os
 from datetime import datetime
 from logging import Logger
 from logging.handlers import RotatingFileHandler
+from pathlib import Path
 
 from config import PathConfig
 
 logs_folder_path = PathConfig.LOGS_DIR
+
 if logs_folder_path[-1] == "/":
     logs_folder_path = logs_folder_path[:-1]
+if not Path(logs_folder_path).is_dir():
+    os.mkdir(logs_folder_path)
+
 loggers: dict[str, Logger] = {}
 
 
