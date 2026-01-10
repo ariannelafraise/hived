@@ -1,15 +1,20 @@
 from abc import ABC, abstractmethod
 
+
 class Notifier(ABC):
     """
-    Gets called by event_handlers to send notifications.
-    TODO: different event_handlers could have different notifiers. Right now its global in config file.
+    Interface for creating notifiers.
+
+    Also referred to as module.
     """
-    @staticmethod
+
     @abstractmethod
-    def notify(sender: str, message: str):
+    def notify(self, sender: str, message: str) -> None:
         """
-        :param sender: sender's name (such as handler's name)
-        :param message: the notification message
+        Sends a notification.
+
+        Parameters:
+            sender: the sender of the notification
+            message: the message of the notification
         """
         pass
