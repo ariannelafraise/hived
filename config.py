@@ -1,13 +1,8 @@
-import os
-
-
 class GeneralConfig:
     VERSION = "0.0.2"
 
 
 class PathConfig:
-    RULES_FILE_PATH = "/etc/audit/rules.d/honeypot.rules"
-    LOG_FILE_PATH = "/var/log/audit/audit.log"
-    CWD = os.getcwd()
-    PLUGINS_DIR = "/home/arianne/personal_dev/hived/modules"
-    HANDLERS_DIR = "/home/arianne/personal_dev/hived/modules"
+    RULES_DIR = "/etc/audit/rules.d"
+    MODULES_DIR = "/home/arianne/personal_dev/hived/modules"
+    LOGS_DIR = "/home/arianne/personal_dev/hived/logs"

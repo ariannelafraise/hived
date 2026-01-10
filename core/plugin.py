@@ -1,6 +1,9 @@
 import argparse
 import subprocess
 from abc import ABC, abstractmethod
+from pathlib import Path
+
+from config import PathConfig
 
 
 class Plugin(ABC):
@@ -9,14 +12,18 @@ class Plugin(ABC):
     """
 
     def __init__(self, name: str) -> None:
-        # self._args_parser = None # idea from autocomplete
         self.name = name
-        self.rules_file_path = f"/etc/audit/rules.d/{self.name}.rules"
+        rules_folder_path = PathConfig.RULES_DIR
+        if rules_folder_path[-1] == "/":
+            rules_folder_path = rules_folder_path[:-1]
+        self.rules_file_path = f"{rules_folder_path}/{self.name}.rules"
+        if not self._rules_file_exists:
+            self._create_rules_file
 
     @abstractmethod
     def init_args_parser(self, subparser: argparse._SubParsersAction) -> None:
         """
-        Add an args parser to hivectl's subparser. Must register handle_command() as its
+        Add an args parser to hivectl's subparser. Must register self.handle_command as its
         handling function.
         :param subparser: The plugins subparser from hivectl
         """
@@ -31,19 +38,20 @@ class Plugin(ABC):
         pass
 
     def _add_rule(self, rule: str) -> None:
-        with open(self.rules_file_path, "r") as rules_file:
-            rules = rules_file.read()
-            if rule in rules:
-                raise ValueError("Rule already exists.")
+        if self._rules_file_exists():
+            with open(self.rules_file_path, "r") as rules_file:
+                rules = rules_file.read()
+                if rule in rules:
+                    raise ValueError("Rule already exists.")
 
         with open(self.rules_file_path, "a") as rules_file:
             rules_file.write("\n" + rule)
 
         self._reload_rules()
 
-    def _clear_rules(
-        self,
-    ) -> None:  # SHOULD INSTEAD REMOVE ITS OWN RULES AND NOT ALL RULES!
+    def _clear_rules(self) -> None:
+        if not self._rules_file_exists():
+            return
         with open(self.rules_file_path, "w") as rules_file:
             rules_file.write("")
         subprocess.run(
@@ -57,3 +65,10 @@ class Plugin(ABC):
             stdout=subprocess.DEVNULL,
             stderr=subprocess.STDOUT,
         )
+
+    def _rules_file_exists(self) -> bool:
+        file_path = Path(self.rules_file_path)
+        return file_path.is_file()
+
+    def _create_rules_file(self) -> None:
+        open(self.rules_file_path, "x").close()

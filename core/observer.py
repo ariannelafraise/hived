@@ -2,26 +2,26 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 
-from core.event import Event
+from core.audit_event import AuditEvent
 
 #
 # Observer design pattern
 #
 
 
-class EventDispatcher(ABC):
+class AuditEventDispatcher(ABC):
     def __init__(self) -> None:
-        self._observers: list[EventObserver] = []
+        self._observers: list[AuditEventObserver] = []
 
-    def add_observer(self, observer: EventObserver) -> None:
+    def add_observer(self, observer: AuditEventObserver) -> None:
         self._observers.append(observer)
 
     @abstractmethod
-    def _notify_observers(self, event: Event) -> None:
+    def _notify_observers(self, event: AuditEvent) -> None:
         pass
 
 
-class EventObserver(ABC):
+class AuditEventObserver(ABC):
     @abstractmethod
-    def handle(self, event: Event) -> None:
+    def handle(self, event: AuditEvent) -> None:
         pass

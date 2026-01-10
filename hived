@@ -3,16 +3,14 @@
 import argparse
 import traceback
 
-from audisp_listener import AudispListener
+import core.hived_logger as hived_logger
+from audispd_listener import AudispdListener
 from config import GeneralConfig
-from core.logger import Logger
-
-logger = Logger("Hived")
 
 
 def start_daemon():
-    logger.info("Hived has been started")
-    AudispListener().listen()
+    hived_logger.info("Hived has been started", "Hived")
+    AudispdListener().listen()
 
 
 def handle_command(arguments: argparse.Namespace):
@@ -20,7 +18,7 @@ def handle_command(arguments: argparse.Namespace):
         try:
             start_daemon()
         except Exception as _:
-            logger.error_traceback(
+            hived_logger.error_traceback(
                 f"something went wrong: {traceback.format_exc()} --- End of Traceback ---"
             )
 

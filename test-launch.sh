@@ -3,6 +3,6 @@ type=SYSCALL msg=audit(1766092657.249:131): arch=c000003e syscall=257 success=ye
 type=CWD msg=audit(1766092657.249:131): cwd="/"
 type=PATH msg=audit(1766092657.249:131): item=0 name="/home/arianne/personal_dev/hived/__pycache__/config.cpython-313.pyc" inode=10886263 dev=103:06 mode=0100644 ouid=0 ogid=0 rdev=00:00 nametype=NORMAL cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0
 type=PROCTITLE msg=audit(1766092657.249:131): proctitle=2F7573722F62696E2F707974686F6E002F686F6D652F617269616E6E652F706572736F6E616C5F6465762F68697665642F6869766564002D73
-type=EOE msg=audit(1766092657.249:131):
+type=SLAY msg=audit(1766092657.259:132):
 EOF
 # Put any audit event between EOF to test
