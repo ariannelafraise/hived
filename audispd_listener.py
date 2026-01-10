@@ -28,7 +28,6 @@ class AudispdListener(AuditEventDispatcher):
             current_record_id = current_record_timestamp_id[1]
 
             if first:
-                print(1)
                 records.append(record)
                 current_event_timestamp = current_record_timestamp
                 current_event_id = current_record_id
@@ -39,7 +38,6 @@ class AudispdListener(AuditEventDispatcher):
                 current_event_timestamp == current_record_timestamp
                 and current_event_id == current_record_id
             ):
-                print(2)
                 records.append(record)
                 continue
 
@@ -47,7 +45,6 @@ class AudispdListener(AuditEventDispatcher):
                 current_event_timestamp != current_record_timestamp
                 and current_event_id != current_record_id
             ):
-                print(3)
                 self._notify_observers(AuditEvent(records))
                 records = []
                 records.append(record)

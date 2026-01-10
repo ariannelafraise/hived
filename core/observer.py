@@ -3,7 +3,6 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 
 from core.audit_event import AuditEvent
-from core.modules import import_event_handlers
 
 
 class AuditEventDispatcher(ABC):
@@ -16,13 +15,9 @@ class AuditEventDispatcher(ABC):
     """
 
     def __init__(self) -> None:
-        """
-        Initializes the audit event dispatcher by loading all event handlers.
-        """
         self._observers: list[AuditEventObserver] = []
-        self._load_event_handlers()
 
-    def _add_observer(self, observer: AuditEventObserver) -> None:
+    def add_observer(self, observer: AuditEventObserver) -> None:
         """
         Add an audit event observer.
 
@@ -41,14 +36,6 @@ class AuditEventDispatcher(ABC):
         for o in self._observers:
             o.handle(event)
 
-    def _load_event_handlers(self) -> None:
-        """
-        Load all event handlers.
-        """
-        handlers = import_event_handlers()
-        for h in handlers:
-            self._add_observer(h)
-
 
 class AuditEventObserver(ABC):
     """
@@ -61,4 +48,5 @@ class AuditEventObserver(ABC):
         """
         Handle an audit event.
         """
+        print("test")
         pass

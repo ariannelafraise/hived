@@ -1,5 +1,6 @@
+from pathlib import Path
+
 import core.hived_logger as hived_logger
-import utils.path_utils as path_utils
 import utils.translations as translations
 from core.audit_event import AuditEvent, AuditRecord
 from core.audit_event_handler import AuditEventHandler
@@ -71,10 +72,7 @@ class FileSystemEvent:
         else:
             path = path1_name
 
-        path = path_utils.get_file_path(
-            path.replace('"', ""),
-            cwd_cwd.replace('"', ""),
-        )
+        path = str((Path(cwd_cwd.replace('"', "")) / path.replace('"', "")).resolve())
 
         return f"{path} has been hit with syscall {syscall_name} ({syscall_syscall}) by {username} using: `{command}`"
 
