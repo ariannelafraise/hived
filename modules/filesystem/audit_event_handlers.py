@@ -1,34 +1,9 @@
-import binascii
-import codecs
-import subprocess
-
 import core.hived_logger as hived_logger
 import utils.path_utils as path_utils
+import utils.translations as translations
 from core.audit_event import AuditEvent, AuditRecord
 from core.audit_event_handler import AuditEventHandler
 from notifiers.discord_webhook_notifier import DiscordWebhookNotifier
-
-
-def _proctitle_to_command(proctitle: str) -> str:
-    try:
-        return codecs.decode(proctitle.replace("00", "20"), "hex").decode("utf-8")
-    except binascii.Error:
-        return proctitle
-
-
-def _uid_to_username(uid: str) -> str:
-    with open("/etc/passwd", "r") as file:
-        for line in file:
-            fields = line.split(":")
-            if fields[2] == uid:
-                return fields[0]
-        raise ValueError("uid is not associated to any user")
-
-
-def _syscall_number_to_name(number: str) -> str:
-    return subprocess.run(
-        ["ausyscall", number], capture_output=True, text=True, check=True
-    ).stdout
 
 
 class FileSystemEvent:
@@ -82,9 +57,9 @@ class FileSystemEvent:
         syscall_uid = self.syscall.get_field_value("uid")
         syscall_syscall = self.syscall.get_field_value("syscall")
 
-        command = _proctitle_to_command(proctitle_proctitle)
-        username = _uid_to_username(syscall_uid)
-        syscall_name = _syscall_number_to_name(syscall_syscall)
+        command = translations.proctitle_to_command(proctitle_proctitle)
+        username = translations.uid_to_username(syscall_uid)
+        syscall_name = translations.syscall_number_to_name(syscall_syscall)
         path = ""
 
         if path1_nametype == "PARENT":
