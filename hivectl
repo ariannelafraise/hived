@@ -3,7 +3,7 @@
 import argparse
 
 from config import GeneralConfig
-from utils.import_utils import import_plugins
+from core.modules import import_plugins
 
 
 def handle_command(arguments: argparse.Namespace):

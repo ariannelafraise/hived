@@ -3,7 +3,7 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 
 from core.audit_event import AuditEvent
-from utils.import_utils import import_event_handlers
+from core.modules import import_event_handlers
 
 
 class AuditEventDispatcher(ABC):
