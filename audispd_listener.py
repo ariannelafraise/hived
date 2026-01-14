@@ -15,10 +15,6 @@ class AudispdListener(AuditEventDispatcher):
         for h in handlers:
             self.add_observer(h)
 
-    def _notify_observers(self, event: AuditEvent) -> None:
-        for o in self._observers:
-            o.handle(event)
-
     def listen(self) -> None:
         records: list[AuditRecord] = []
         first = True
@@ -26,9 +22,7 @@ class AudispdListener(AuditEventDispatcher):
         current_event_id = ""
 
         for line in sys.stdin:
-            # self.logger.info(line, "lines")
             record = AuditRecord(line)
-            # self.logger.info(str(log), "audit_events")
 
             type = record.get_field_value("type")
             msg1 = record.get_field_value("msg1")

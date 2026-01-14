@@ -16,9 +16,9 @@ class AuditEventDispatcher(ABC):
     def add_observer(self, observer: AuditEventObserver) -> None:
         self._observers.append(observer)
 
-    @abstractmethod
     def _notify_observers(self, event: AuditEvent) -> None:
-        pass
+        for o in self._observers:
+            o.handle(event)
 
 
 class AuditEventObserver(ABC):
