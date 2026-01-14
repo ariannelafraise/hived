@@ -11,6 +11,9 @@ class AuditEventHandler(AuditEventObserver, ABC):
     Also referred to as module.
     """
 
+    def __init__(self, threaded: bool = False) -> None:
+        super().__init__(threaded)
+
     @abstractmethod
     def _applies_to(self, event: AuditEvent) -> bool:
         """
