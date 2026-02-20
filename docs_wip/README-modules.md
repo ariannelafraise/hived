@@ -1,3 +1,9 @@
+Will explain how to make modules, good practices.
+
+
+
+
+
 Specific plugin commands can be accessed by specifying the name of the plugin as such:
 ```bash
 # hivectl [plugin name] [command]
