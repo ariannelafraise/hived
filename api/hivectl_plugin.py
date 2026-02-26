@@ -6,7 +6,7 @@ from pathlib import Path
 RULES_DIR_PATH = "/etc/audit/rules.d"
 
 
-class Plugin(ABC):
+class HivectlPlugin(ABC):
     """
     Base abstract class for defining a plugin.
     A plugin extends the functionalities of hivectl (using argparse).

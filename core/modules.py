@@ -2,10 +2,9 @@ import importlib.util
 import inspect
 import os
 
-from core.audit_event_handler import AuditEventHandler
+from api.audit_event_handler import AuditEventHandler
+from api.hivectl_plugin import HivectlPlugin
 from core.config import PathConfig
-from core.notifier import Notifier
-from core.plugin import Plugin
 
 
 class DynamicModuleImportError(Exception):
@@ -61,16 +60,16 @@ def _dynamic_import(base_class: type, file_name: str) -> dict[str, type]:
     return classes
 
 
-def import_plugins() -> list[Plugin]:
+def import_plugins() -> list[HivectlPlugin]:
     """
     Imports all plugins and returns them into a list.
     Plugins are looked for in subfolders of the 'modules' directory,
     in 'plugins.py' files.
     """
-    imported_plugins = _dynamic_import(Plugin, "plugins.py")
-    instantiated_plugins: list[Plugin] = []
+    imported_plugins = _dynamic_import(HivectlPlugin, "plugins.py")
+    instantiated_plugins: list[HivectlPlugin] = []
     for module, plugin in imported_plugins.items():
-        if issubclass(plugin, Plugin):
+        if issubclass(plugin, HivectlPlugin):
             instantiated_plugins.append(plugin(module))
     return instantiated_plugins
 
@@ -87,17 +86,3 @@ def import_event_handlers() -> list[AuditEventHandler]:
         if issubclass(handler, AuditEventHandler):
             instantiated_handlers.append(handler())
     return instantiated_handlers
-
-
-def import_notifiers() -> list[Notifier]:
-    """
-    Imports all notifiers and returns them into a list.
-    Notifiers are looked for in subfolders of the 'modules' directory,
-    in 'notifiers.py' files.
-    """
-    imported_notifiers = _dynamic_import(Notifier, "notifiers.py")
-    instantiated_notifiers: list[Notifier] = []
-    for _, notifier in imported_notifiers.items():
-        if issubclass(notifier, Notifier):
-            instantiated_notifiers.append(notifier())
-    return instantiated_notifiers
