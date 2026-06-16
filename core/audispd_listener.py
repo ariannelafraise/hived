@@ -1,7 +1,8 @@
 import sys
 
-from core.audit_event import AuditEvent, AuditRecord
-from core.observer import AuditEventDispatcher
+import utils.parsing as parsing
+from core.audit_event_dispatcher import AuditEventDispatcher
+from h1ve import AuditEvent, AuditRecord
 
 
 class AudispdListener(AuditEventDispatcher):
@@ -19,7 +20,9 @@ class AudispdListener(AuditEventDispatcher):
         current_event_id = ""
 
         for line in sys.stdin:
-            record = AuditRecord(line)
+            cleaned_event_string = parsing.clean_audit_event_string(line)
+            fields = parsing.parse_audit_event_fields(cleaned_event_string)
+            record = AuditRecord(cleaned_event_string, fields)
 
             type = record.get_field_value("type")
             msg1 = record.get_field_value("msg1")

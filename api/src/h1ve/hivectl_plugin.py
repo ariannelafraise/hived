@@ -6,7 +6,7 @@ from pathlib import Path
 RULES_DIR_PATH = "/etc/audit/rules.d"
 
 
-class Plugin(ABC):
+class HivectlPlugin(ABC):
     """
     Base abstract class for defining a plugin.
     A plugin extends the functionalities of hivectl (using argparse).
@@ -19,13 +19,15 @@ class Plugin(ABC):
         _rules_file_path: the path to the rules file: rules file format: <self._name>.rules
     """
 
-    def __init__(self, name: str) -> None:
+    def __init__(self, name: str = "") -> None:
         """
         Initializes the plugin by setting its name and rules file path.
 
         Parameters:
             name: the name of the plugin
         """
+        if name == "":
+            raise
         self._name = name
         self._rules_file_path = f"{RULES_DIR_PATH}/{self._name}.rules"
         if not self._rules_file_exists:
@@ -109,3 +111,11 @@ class Plugin(ABC):
         Creates the plugin's rules file.
         """
         open(self._rules_file_path, "x").close()
+
+
+class InvalidPluginNameException(Exception):
+    """
+    The provided plugin name is not valid. Cannot be "".
+    """
+
+    pass

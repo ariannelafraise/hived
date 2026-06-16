@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
-from core.audit_event import AuditEvent
-from core.observer import AuditEventObserver
+from .audit_event import AuditEvent
+from .audit_event_observer import AuditEventObserver
 
 
 class AuditEventHandler(AuditEventObserver, ABC):
