@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "hivesec"
-version = "0.1.0"
+version = "1.0.0"
 description = "The official API for HiveSec"
 readme = "README.md"
 authors = [{ name = "Arianne" }]
