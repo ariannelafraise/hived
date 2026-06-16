@@ -7,10 +7,8 @@ from logging import Logger
 from logging.handlers import RotatingFileHandler
 from pathlib import Path
 
-from core.config import PathConfig
-
 # Setup logs directory
-logs_dir_path = PathConfig.LOGS_DIR
+logs_dir_path = "/var/log/hived"
 if logs_dir_path[-1] == "/":
     logs_dir_path = logs_dir_path[:-1]
 if not Path(logs_dir_path).is_dir():

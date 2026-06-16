@@ -3,4 +3,5 @@
 .env
 __pycache__/
 logs/
-config.py
+api/src/h1ve.egg-info/
+api/dist/

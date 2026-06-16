@@ -1,10 +1,7 @@
-#!/usr/bin/python
-
 import argparse
 
-from core.config import GeneralConfig
-from core.modules import import_plugins
-
+from core.external import import_plugins
+from __version__ import __version__
 
 def handle_command(arguments: argparse.Namespace):
     """
@@ -27,7 +24,7 @@ if __name__ == "__main__":
         "--version",
         help="View currently installed version.",
         action="version",
-        version=f"v{GeneralConfig.VERSION}",
+        version=f"v{__version__}",
     )
 
     args = parser.parse_args()

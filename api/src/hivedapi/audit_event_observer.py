@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 
-from api.audit_event import AuditEvent
+from .audit_event import AuditEvent
 
 
 class AuditEventObserver(ABC):

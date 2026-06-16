@@ -1,13 +1,10 @@
-#!/usr/bin/python
-
 import argparse
 import traceback
 
 import core.hived_logger as hived_logger
 from core.audispd_listener import AudispdListener
-from core.config import GeneralConfig
-from core.modules import import_event_handlers
-
+from core.external import import_event_handlers
+from __version__ import __version__
 
 def start_daemon():
     """
@@ -45,7 +42,7 @@ if __name__ == "__main__":
         "--version",
         help="View currently installed version.",
         action="version",
-        version=f"v{GeneralConfig.VERSION}",
+        version=f"v{__version__}",
     )
     group.add_argument(
         "-s", "--start", help="Start the hived daemon", action="store_true"
