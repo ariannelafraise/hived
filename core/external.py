@@ -15,6 +15,9 @@ class ExternalApplicationImportError(Exception):
 
 
 def _load_base_classes_from_file(base_class: type, path: str) -> list[Any]:
+    """
+    Loads classes that extend a certain base class from a file
+    """
     classes = []
     path_elements = path.split("/")
     file_name = path_elements[-1]
@@ -33,6 +36,9 @@ def _load_base_classes_from_file(base_class: type, path: str) -> list[Any]:
 
 
 def _explore_dir(base_class: type, path: str) -> list[Any]:
+    """
+    Explores a directory recursively to load modules.
+    """
     classes = []
     if path.split("/")[-1].startswith("."):
         return classes
