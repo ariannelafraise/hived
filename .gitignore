@@ -5,3 +5,4 @@ __pycache__/
 logs/
 api/src/hivesec.egg-info/
 api/dist/
+api/build/
