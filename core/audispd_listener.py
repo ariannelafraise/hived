@@ -1,8 +1,8 @@
 import sys
 
-import utils.parsing as parsing
+import core.utils.parsing as parsing
 from core.audit_event_dispatcher import AuditEventDispatcher
-from h1ve import AuditEvent, AuditRecord
+from hivesec import AuditEvent, AuditRecord
 
 
 class AudispdListener(AuditEventDispatcher):

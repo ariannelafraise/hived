@@ -1,7 +1,7 @@
 import argparse
 import traceback
 
-import core.hived_logger as hived_logger
+import core.logger as logger
 from core.audispd_listener import AudispdListener
 from core.external import import_event_handlers
 from __version__ import __version__
@@ -11,7 +11,7 @@ def start_daemon():
     Starts the daemon by creating the listener and loading all
     the audit event handlers into it as observers.
     """
-    hived_logger.info("Hived has been started", "Hived")
+    logger.info("HiveSec has been started", "HiveSec")
     try:
         listener = AudispdListener()
         handlers = import_event_handlers()
@@ -19,7 +19,7 @@ def start_daemon():
             listener.add_observer(h)
         listener.listen()
     except Exception as _:
-        hived_logger.error_traceback(
+        logger.error_traceback(
             f"something went wrong: {traceback.format_exc()} --- End of Traceback ---"
         )
 
@@ -34,7 +34,7 @@ def handle_command(arguments: argparse.Namespace):
 
 if __name__ == "__main__":
     #  Initialize the args parser and handle user input
-    parser = argparse.ArgumentParser(description="Hived")
+    parser = argparse.ArgumentParser(description="HiveSec")
     parser.set_defaults(func=handle_command)
     group = parser.add_mutually_exclusive_group(required=False)
     group.add_argument(
@@ -45,7 +45,7 @@ if __name__ == "__main__":
         version=f"v{__version__}",
     )
     group.add_argument(
-        "-s", "--start", help="Start the hived daemon", action="store_true"
+        "-s", "--start", help="Start the HiveSec daemon", action="store_true"
     )
 
     args = parser.parse_args()

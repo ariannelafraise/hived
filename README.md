@@ -1,2 +1,2 @@
-# Hived
+# HiveSec
 Documentation in progress

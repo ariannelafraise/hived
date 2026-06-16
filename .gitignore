@@ -3,5 +3,5 @@
 .env
 __pycache__/
 logs/
-api/src/h1ve.egg-info/
+api/src/hivesec.egg-info/
 api/dist/

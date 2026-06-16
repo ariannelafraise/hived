@@ -3,16 +3,13 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "h1ve"
+name = "hivesec"
 version = "0.1.0"
-description = "The official API for Hived"
+description = "The official API for HiveSec"
 readme = "README.md"
-authors = [{ name = "Arianne", email = "hived@shied.arianne.dev" }]
+authors = [{ name = "Arianne" }]
 license = { file = "LICENSE" }
-keywords = ["hived", "hive", "linux", "audit", "framework"]
+keywords = ["hivesec", "hive", "linux", "audit", "framework"]
 
 [project.urls]
-Homepage = "https://github.com/ariannelafraise/hived"
-
-[project.scripts]
-realpython = "reader.__main__:main"
+Homepage = "https://github.com/ariannelafraise/hivesec"

@@ -8,7 +8,7 @@ from logging.handlers import RotatingFileHandler
 from pathlib import Path
 
 # Setup logs directory
-logs_dir_path = "/var/log/hived"
+logs_dir_path = "/var/log/hivesec"
 if logs_dir_path[-1] == "/":
     logs_dir_path = logs_dir_path[:-1]
 if not Path(logs_dir_path).is_dir():
@@ -52,7 +52,7 @@ def _get_logger(file_name: str) -> Logger:
     return loggers[file_name]
 
 
-def info(log: str, source: str, file_name: str = "hived.log") -> None:
+def info(log: str, source: str, file_name: str = "hivesec.log") -> None:
     """
     INFO level log for a given log file.
 

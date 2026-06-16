@@ -3,7 +3,7 @@ import inspect
 import os
 from typing import Any
 
-from h1ve import AuditEventHandler, HivectlPlugin
+from hivesec import AuditEventHandler, HivectlPlugin
 
 
 class ExternalApplicationImportError(Exception):
@@ -59,11 +59,12 @@ def _dynamic_import(base_class: type) -> list[type]:
         base_class: the module class to be imported
 
     Example: _dynamic_import(Plugin) ->
-    Imports all 'Plugin' modules found in all the external applications that were registered to Hived.
+    Imports all 'Plugin' modules found in all the external applications that were registered to HiveSec.
     """
     classes = []
-    with open("/etc/hived/apps", "r") as file:
+    with open("/etc/hivesec/apps", "r") as file:
         for app_directory in file:
+            print(app_directory)
             if app_directory[-1] == "/":
                 app_directory = app_directory[:-1]
             app_directory = app_directory.replace("\n", "")

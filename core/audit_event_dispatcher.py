@@ -3,7 +3,7 @@ from __future__ import annotations
 from abc import ABC
 from threading import Thread
 
-from h1ve import AuditEvent, AuditEventObserver
+from hivesec import AuditEvent, AuditEventObserver
 
 
 class AuditEventDispatcher(ABC):

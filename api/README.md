@@ -1,1 +1,1 @@
-# Hived API
+# HiveSec API
