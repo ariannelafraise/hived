@@ -64,7 +64,6 @@ def _dynamic_import(base_class: type) -> list[type]:
     classes = []
     with open("/etc/hivesec/apps", "r") as file:
         for app_directory in file:
-            print(app_directory)
             if app_directory[-1] == "/":
                 app_directory = app_directory[:-1]
             app_directory = app_directory.replace("\n", "")
