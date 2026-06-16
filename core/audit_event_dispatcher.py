@@ -3,7 +3,7 @@ from __future__ import annotations
 from abc import ABC
 from threading import Thread
 
-from hivedapi import AuditEvent, AuditEventObserver
+from h1ve import AuditEvent, AuditEventObserver
 
 
 class AuditEventDispatcher(ABC):

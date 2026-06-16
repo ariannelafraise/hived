@@ -2,7 +2,7 @@ import sys
 
 import utils.parsing as parsing
 from core.audit_event_dispatcher import AuditEventDispatcher
-from hivedapi import AuditEvent, AuditRecord
+from h1ve import AuditEvent, AuditRecord
 
 
 class AudispdListener(AuditEventDispatcher):

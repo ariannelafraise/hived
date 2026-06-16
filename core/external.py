@@ -3,7 +3,7 @@ import inspect
 import os
 from typing import Any
 
-from hivedapi import AuditEventHandler, HivectlPlugin
+from h1ve import AuditEventHandler, HivectlPlugin
 
 
 class ExternalApplicationImportError(Exception):
