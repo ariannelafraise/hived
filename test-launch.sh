@@ -1,3 +1,8 @@
+if [ "$EUID" -ne 0 ]; then
+    echo "Please run as root"
+    exit 1
+fi
+
 .venv/bin/python hivesecd.py -s <<EOF
 type=SYSCALL msg=audit(1766092657.249:131): arch=c000003e syscall=257 success=yes exit=3 a0=ffffffffffffff9c a1=7fa9efb60b40 a2=80000 a3=0 items=1 ppid=901 pid=906 auid=4294967295 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=(none) ses=4294967295 comm="hivesec" exe="/usr/bin/python3.13" key="filesystem"
 type=CWD msg=audit(1766092657.249:131): cwd="/"
