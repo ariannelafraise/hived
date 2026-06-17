@@ -23,7 +23,9 @@ def _load_base_classes_from_file(base_class: type, path: str) -> list[Any]:
     file_name = path_elements[-1]
     spec = importlib.util.spec_from_file_location(file_name, path)
     if not spec or not spec.loader:
-        raise ExternalApplicationImportError(f"Failed to import {file_name} from {path}")
+        raise ExternalApplicationImportError(
+            f"Failed to import {file_name} from {path}"
+        )
     module_from_spec = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module_from_spec)
 
@@ -64,6 +66,8 @@ def _dynamic_import(base_class: type) -> list[type]:
     classes = []
     with open("/etc/hivesec/apps", "r") as file:
         for app_directory in file:
+            if app_directory.startswith("#"):
+                continue
             if app_directory[-1] == "/":
                 app_directory = app_directory[:-1]
             app_directory = app_directory.replace("\n", "")
