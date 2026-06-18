@@ -45,7 +45,7 @@ class MyHoneypotHandler(AuditEventHandler):
 
 Event handlers receive `AuditEvent` objects, which are groups of records (`AuditRecord`) belonging to the same security event. `AuditRecord` fields are put into a Python dictionary. The keys and values are kept intact from the original log string, only the '=' sign between the two is removed.
 
-Example:
+For example:
 
 `msg=audit(1766092657.249:131): item=0 name="/etc/shadow"`
 
