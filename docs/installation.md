@@ -14,12 +14,12 @@ To use HiveSec you need a Linux system with:
 
 To install HiveSec, simply run the installation script:
 ```bash
-curl -sL https://raw.githubusercontent.com/ariannelafraise/hivesec/refs/heads/main/install.sh | bash
+curl -sL https://raw.githubusercontent.com/ariannelafraise/hivesec/refs/heads/main/install.sh | sudo bash
 ```
 
 To uninstall, use this script:
 ```bash
-curl -sL https://raw.githubusercontent.com/ariannelafraise/hivesec/refs/heads/main/uninstall.sh | bash
+curl -sL https://raw.githubusercontent.com/ariannelafraise/hivesec/refs/heads/main/uninstall.sh | sudo bash
 ```
 
 ## Boot configuration (optional)

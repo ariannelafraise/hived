@@ -109,6 +109,6 @@ by editing the file directly:
 ```
 or by running:
 ```bash
-hivectl --register ABSOLUTE_PATH
+sudo hivectl --register ABSOLUTE_PATH
 ```
 2. Reboot to let HiveSec detect and load your new application.
