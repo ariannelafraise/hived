@@ -23,7 +23,7 @@ def absolute_directory(path: str) -> Path:
 
 def register_application(path: str):
     with open("/etc/hivesec/apps", "a") as file:
-        file.write(path)
+        file.write(path+"\n")
 
 def handle_command(arguments: argparse.Namespace):
     """
