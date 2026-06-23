@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import json
+
 
 class AuditEvent:
     """
@@ -33,6 +35,9 @@ class AuditRecord:
 
     def __str__(self) -> str:
         return self._as_string
+    
+    def json(self):
+        return json.dumps(self._fields, indent=4)
 
     def get_field_value(self, field: str) -> str:
         """

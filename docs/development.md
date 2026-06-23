@@ -45,6 +45,9 @@ class MyHoneypotHandler(AuditEventHandler):
 
 Event handlers receive `AuditEvent` objects, which are groups of records (`AuditRecord`) belonging to the same security event. `AuditRecord` fields are put into a Python dictionary. The keys and values are kept intact from the original log string, only the '=' sign between the two is removed.
 
+> [!TIP]
+> Use `record.json()` to retrieve the record in JSON format.
+
 For example:
 
 `msg=audit(1766092657.249:131): item=0 name="/etc/shadow"`
@@ -112,3 +115,9 @@ or by running:
 sudo hivectl --register ABSOLUTE_PATH
 ```
 2. Reboot to let HiveSec detect and load your new application.
+
+### Using python libraries
+To use python libraries in an HiveSec application, install it in the virtual environment used by HiveSec:
+```bash
+sudo /usr/local/lib/hivesec/.venv/bin/pip install <package>
+```
