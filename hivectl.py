@@ -4,6 +4,7 @@ from pathlib import Path
 from core.external import import_plugins
 from __version__ import __version__
 
+
 def absolute_directory(path: str) -> Path:
     """
     Validate that the given path is an absolute path to an existing directory.
@@ -21,9 +22,11 @@ def absolute_directory(path: str) -> Path:
 
     return path
 
+
 def register_application(path: str):
     with open("/etc/hivesec/apps", "a") as file:
-        file.write(path+"\n")
+        file.write(path + "\n")
+
 
 def handle_command(arguments: argparse.Namespace):
     """

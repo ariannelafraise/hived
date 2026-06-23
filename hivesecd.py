@@ -6,6 +6,7 @@ from core.audispd_listener import AudispdListener
 from core.external import import_event_handlers
 from __version__ import __version__
 
+
 def start_daemon():
     """
     Starts the daemon by creating the listener and loading all
