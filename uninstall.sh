@@ -21,6 +21,10 @@ printf "%b==>%b Removing audit plugin...\n" "$C_MAGENTA" "$C_RESET"
 rm -f /etc/audit/plugins.d/hivesec.conf
 printf "%b[ OK ]%b Plugin removed\n" "$C_GREEN" "$C_RESET"
 
+printf "\033[38;5;183m==>\033[0m Restoring Auditd config...\n"
+sed -i "s/log_format = RAW/log_format = ENRICHED/g" /etc/audit/auditd.conf
+printf "\033[38;5;150m[ OK ]\033[0m Auditd config restored\n"
+
 printf "%b==>%b Removing hivectl command...\n" "$C_MAGENTA" "$C_RESET"
 rm -f /usr/local/bin/hivectl
 printf "%b[ OK ]%b hivectl removed\n" "$C_GREEN" "$C_RESET"

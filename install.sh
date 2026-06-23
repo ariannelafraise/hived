@@ -59,6 +59,10 @@ format = string
 EOF
 printf "\033[38;5;150m[ OK ]\033[0m HiveSec plugin configured\n"
 
+printf "\033[38;5;183m==>\033[0m Configuring Auditd to log in raw format...\n"
+sed -i "s/log_format = ENRICHED/log_format = RAW/g" /etc/audit/auditd.conf
+printf "\033[38;5;150m[ OK ]\033[0m Auditd configured to log in raw format\n"
+
 printf "%b==>%b Creating hivectl command...\n" "$C_MAGENTA" "$C_RESET"
 echo "" > /usr/local/bin/hivectl
 cat >/usr/local/bin/hivectl <<'EOF'
