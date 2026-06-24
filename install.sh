@@ -18,22 +18,27 @@ fi
 printf "%b[ OK ]%b Root confirmed\n" "$C_GREEN" "$C_RESET"
 
 printf "%b==>%b Cloning source repository...\n" "$C_MAGENTA" "$C_RESET"
-cd /usr/local/src
-rm -rf hivesec
-git clone https://github.com/ariannelafraise/hivesec.git
-cd hivesec
+
+rm -rf /usr/local/src/hivesec
+if [[ $1 -eq "local" ]]; then
+    cp -r ../hivesec /usr/local/src
+else
+    git clone https://github.com/ariannelafraise/hivesec.git
+fi
+cd /usr/local/src/hivesec
 printf "%b[ OK ]%b Repository ready\n" "$C_GREEN" "$C_RESET"
 
 printf "%b==>%b Installing application files...\n" "$C_MAGENTA" "$C_RESET"
 rm -rf /usr/local/lib/hivesec
 mkdir -p /usr/local/lib/hivesec
 cp -r core /usr/local/lib/hivesec/
+cp -r api /usr/local/lib/hivesec/
 cp __version__.py hivectl.py hivesecd.py /usr/local/lib/hivesec/
 printf "%b[ OK ]%b Files copied\n" "$C_GREEN" "$C_RESET"
 
 printf "%b==>%b Creating Python virtual environment...\n" "$C_MAGENTA" "$C_RESET"
 python3 -m venv /usr/local/lib/hivesec/.venv
-/usr/local/lib/hivesec/.venv/bin/pip install hivesec
+/usr/local/lib/hivesec/.venv/bin/pip install -e /usr/local/lib/hivesec/api
 printf "%b[ OK ]%b Virtual environment ready\n" "$C_GREEN" "$C_RESET"
 
 printf "\033[38;5;183m==>\033[0m Writing audisp configuration...\n"
