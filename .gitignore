@@ -7,3 +7,5 @@ api/src/hivesec.egg-info/
 api/dist/
 api/build/
 .opencode/
+test.py
+samples/
