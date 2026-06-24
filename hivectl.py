@@ -7,16 +7,17 @@ from __version__ import __version__
 
 RESET = "\033[0m"
 
-PASTEL_RED     = "\033[38;2;255;179;186m"
-PASTEL_ORANGE  = "\033[38;2;255;223;186m"
-PASTEL_YELLOW  = "\033[38;2;255;255;186m"
-PASTEL_GREEN   = "\033[38;2;186;255;201m"
-PASTEL_CYAN    = "\033[38;2;186;255;255m"
-PASTEL_BLUE    = "\033[38;2;186;225;255m"
-PASTEL_PURPLE  = "\033[38;2;218;191;255m"
-PASTEL_PINK    = "\033[38;2;255;209;220m"
+PASTEL_RED = "\033[38;2;255;179;186m"
+PASTEL_ORANGE = "\033[38;2;255;223;186m"
+PASTEL_YELLOW = "\033[38;2;255;255;186m"
+PASTEL_GREEN = "\033[38;2;186;255;201m"
+PASTEL_CYAN = "\033[38;2;186;255;255m"
+PASTEL_BLUE = "\033[38;2;186;225;255m"
+PASTEL_PURPLE = "\033[38;2;218;191;255m"
+PASTEL_PINK = "\033[38;2;255;209;220m"
 PASTEL_LAVENDER = "\033[38;2;230;230;250m"
-PASTEL_MINT    = "\033[38;2;189;252;201m"
+PASTEL_MINT = "\033[38;2;189;252;201m"
+
 
 def absolute_directory(path: str) -> Path:
     """
@@ -32,7 +33,7 @@ def absolute_directory(path: str) -> Path:
 
     if not p.is_dir():
         raise argparse.ArgumentTypeError("path is not a directory")
-    
+
     if path[-1] == "/":
         return path[:-1]
     else:
@@ -67,7 +68,7 @@ def install_dependency(packages):
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
         text=True,
-        bufsize=1
+        bufsize=1,
     )
 
     for line in process.stdout:
@@ -92,7 +93,6 @@ def handle_command(arguments: argparse.Namespace):
         return
 
 
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Hivectl")
     parser.set_defaults(func=handle_command)
@@ -103,7 +103,9 @@ if __name__ == "__main__":
         [plugin.init_args_parser(subparsers) for plugin in plugins]
     except ModuleNotFoundError:
         print(PASTEL_RED, end="")
-        print("Warning: Some dependencies are missing. Make sure to install dependencies needed for HiveSec apps with 'sudo hivectl --install-dependency <packages>'")
+        print(
+            "Warning: Some dependencies are missing. Make sure to install dependencies needed for HiveSec apps with 'sudo hivectl --install-dependency <packages>'"
+        )
         print("Skipping plugins loading.\n")
         print(RESET, end="")
         pass

@@ -5,7 +5,8 @@ import core.utils.parsing as parsing
 from core.audit_event_dispatcher import AuditEventDispatcher
 from hivesec import AuditEvent, AuditRecord
 
-TIMEOUT = 1 # 50 ms
+TIMEOUT = 1  # 50 ms
+
 
 class AudispdListener(AuditEventDispatcher):
     def __init__(self) -> None:
@@ -17,15 +18,15 @@ class AudispdListener(AuditEventDispatcher):
         Logically ties records of the same event.
         """
         records: list[AuditRecord] = []
-        first = True # First record received total, not for specific event
+        first = True  # First record received total, not for specific event
         current_event_id = ""
 
         while True:
             ready, _, _ = select.select([sys.stdin], [], [], TIMEOUT)
 
-            if not ready: 
+            if not ready:
                 # after TIMEOUT, send the event. this is needed because HiveSec know the event ended only when a new one starts.
-                # since event records are sent almost simultaneously, HiveSec can know that after a 
+                # since event records are sent almost simultaneously, HiveSec can know that after a
                 # certain period of time without new records, the event must have ended.
                 if records:
                     self._notify_observers(AuditEvent(records))
@@ -34,10 +35,11 @@ class AudispdListener(AuditEventDispatcher):
 
             line = sys.stdin.readline()
 
-            if not line: # happens when testing: EOF occurs, which would never happen in real usage
+            if (
+                not line
+            ):  # happens when testing: EOF occurs, which would never happen in real usage
                 if records:
                     self._notify_observers(AuditEvent(records))
-                
 
             cleaned_event_string = parsing.clean_audit_event_string(line)
             fields = parsing.parse_audit_event_fields(cleaned_event_string)
