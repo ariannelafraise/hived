@@ -13,7 +13,7 @@ class AudispdListener(AuditEventDispatcher):
 
     def listen(self) -> None:
         """
-        Listens for audit logs sent by Audispd in stdin and forwards them to its observers.
+        Listens for audit logs sent by Audispd in stdin and forwards them to handlers.
         Logically ties records of the same event.
         """
         records: list[AuditRecord] = []
