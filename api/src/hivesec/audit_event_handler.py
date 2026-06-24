@@ -1,23 +1,23 @@
 from abc import ABC, abstractmethod
 
 from .audit_event import AuditEvent
-from .audit_event_observer import AuditEventObserver
 
 
-class AuditEventHandler(AuditEventObserver, ABC):
+class AuditEventHandler(ABC):
     """
-    Interface for creating audit event handlers.
+    Defines the interface of an audit event handler.
+    In the observer design pattern, it represents the observer.
 
     Also referred to as module.
     """
 
-    def __init__(self, threaded: bool = False) -> None:
-        super().__init__(threaded)
-
     @abstractmethod
-    def _applies_to(self, event: AuditEvent) -> bool:
+    def matches(self, event: AuditEvent) -> bool:
         """
         Verify that the received audit event should be acted upon.
+
+        The audit event dispatcher will send the event to the handle()
+        function only if this function returns True.
 
         Parameters:
             event: the audit event to check
@@ -28,8 +28,6 @@ class AuditEventHandler(AuditEventObserver, ABC):
     def handle(self, event: AuditEvent) -> None:
         """
         Handles a received event.
-        Called by any AuditEventDispatcher on every audit event; it is recommended to verify
-        if the event should be handled with self._applies_to().
 
         Parameters:
             event: any audit event received by any AuditEventDispatcher

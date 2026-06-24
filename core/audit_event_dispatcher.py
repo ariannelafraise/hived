@@ -1,9 +1,8 @@
 from __future__ import annotations
 
 from abc import ABC
-from threading import Thread
 
-from hivesec import AuditEvent, AuditEventObserver
+from hivesec import AuditEvent, AuditEventHandler
 
 
 class AuditEventDispatcher(ABC):
@@ -16,11 +15,11 @@ class AuditEventDispatcher(ABC):
     """
 
     def __init__(self) -> None:
-        self._observers: list[AuditEventObserver] = []
+        self._observers: list[AuditEventHandler] = []
 
-    def add_observer(self, observer: AuditEventObserver) -> None:
+    def add_observer(self, observer: AuditEventHandler) -> None:
         """
-        Add an audit event observer.
+        Add an audit event handler (observer).
 
         Parameters:
             observer: the audit event observer to add
@@ -35,7 +34,5 @@ class AuditEventDispatcher(ABC):
             event: the new audit event
         """
         for o in self._observers:
-            if o.threaded:
-                Thread(target=o.handle, args=(event,)).start()
-            else:
+            if o.matches(event):
                 o.handle(event)
