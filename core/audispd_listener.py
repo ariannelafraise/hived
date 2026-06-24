@@ -1,7 +1,7 @@
 import sys
 import select
 
-import core.utils.parsing as parsing
+import hivesec.utils.parsing as parsing
 from core.audit_event_dispatcher import AuditEventDispatcher
 from hivesec import AuditEvent, AuditRecord
 
