@@ -29,18 +29,17 @@ HiveSec uses the Observer design pattern to distribute events. To register your 
 from hivesec import AuditEventHandler, AuditEvent
 
 class MyHoneypotHandler(AuditEventHandler):
-    """Example honeypot event handler"""
     
-    def _applies_to(self, event: AuditEvent) -> bool:
-        """Check if this event should be handled"""
+    def matches(self, event: AuditEvent) -> bool: 
+        # Gets called by the event dispatcher to verify if the handler wants the event
         for record in event.records:
-            if "honeypot12" != record.get_field_value("key"):
+            if "honeypot" != record.get_field_value("key"):
                 return False
         return True
     
     def handle(self, event: AuditEvent):
-        """Process the audit event"""
-        print(f"Processing security event with {len(event.records)} records")
+        # Gets called by the event dispatcher to give the event to the handler
+        print(f"Handling security event with {len(event.records)} records")
 ```
 
 Event handlers receive `AuditEvent` objects, which are groups of records (`AuditRecord`) belonging to the same security event. `AuditRecord` fields are put into a Python dictionary. The keys and values are kept intact from the original log string, only the '=' sign between the two is removed.
@@ -58,7 +57,7 @@ would give:
 {
   "msg": "audit(1766092657.249:131):",
   "item": "0",
-  "name": '"/etc/shadow"'
+  "name": "\"/etc/shadow\""
 }
 ```
 
@@ -114,10 +113,29 @@ or by running:
 ```bash
 sudo hivectl --register ABSOLUTE_PATH
 ```
+
 2. Reboot to let HiveSec detect and load your new application.
+
 
 ### Using python libraries
 To use python libraries in an HiveSec application, install it in the virtual environment used by HiveSec:
 ```bash
 sudo /usr/local/lib/hivesec/.venv/bin/pip install <package>
+```
+
+## Testing
+Testing with real event triggers is difficult and time-consuming. Instead, use the `test-launch.sh` script to inject specific log records into HiveSec.
+
+1. Create a file containing the sample of logs you want to use to test
+
+sample.txt
+```
+type=SYSCALL msg=audit(1782085825.872:50): arch=c000003e syscall=257 success=yes exit=3 a0=ffffffffffffff9c a1=7f0d8c7f1ee8 a2=341 a3=1b6 items=1 ppid=300290 pid=300298 auid=1000 uid=1000 gid=1000 euid=1000 suid=1000 fsuid=1000 egid=1000 sgid=1000 fsgid=1000 tty=pts1 ses=3 comm="zsh" exe="/usr/bin/zsh" key="flag_access"
+type=PATH msg=audit(1782085825.872:50): item=0 name="flag.txt" inode=49295866 dev=103:03 mode=0100644 ouid=1000 ogid=1000 rdev=00:00 nametype=NORMAL cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0
+```
+
+2. Launch the test with it
+
+```bash
+sudo ./test-launch.sh sample.txt
 ```
