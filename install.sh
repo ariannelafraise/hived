@@ -23,7 +23,7 @@ rm -rf /usr/local/src/hivesec
 if [[ $1 == "local" ]]; then
     cp -r ../hivesec /usr/local/src
 else
-    git clone https://github.com/ariannelafraise/hivesec.git
+    git clone https://github.com/ariannelafraise/hivesec.git /usr/local/src/hivesec
 fi
 cd /usr/local/src/hivesec
 printf "%b[ OK ]%b Repository ready\n" "$C_GREEN" "$C_RESET"
