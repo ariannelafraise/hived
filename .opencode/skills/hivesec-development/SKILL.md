@@ -175,7 +175,6 @@ Log files stored in `/var/log/hivesec/` when using HiveSec logger.
 1. Always use `has_field(field)` to check field existence BEFORE accessing it
 2. Use absolute paths for all file operations
 3. Implement proper event filtering in `matches()` to handle high-volume logs efficiently
-4. Consider threading (`threaded`) for blocking operations
 5. Handle errors gracefully and log appropriately
 6. Test handlers with sample audit events before deployment
 7. Never access `_fields` directly - use the public API methods

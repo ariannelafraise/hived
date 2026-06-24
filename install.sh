@@ -20,7 +20,7 @@ printf "%b[ OK ]%b Root confirmed\n" "$C_GREEN" "$C_RESET"
 printf "%b==>%b Cloning source repository...\n" "$C_MAGENTA" "$C_RESET"
 
 rm -rf /usr/local/src/hivesec
-if [[ $1 -eq "local" ]]; then
+if [[ $1 == "local" ]]; then
     cp -r ../hivesec /usr/local/src
 else
     git clone https://github.com/ariannelafraise/hivesec.git
