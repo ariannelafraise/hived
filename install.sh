@@ -25,15 +25,12 @@ if [[ $1 == "local" ]]; then
 else
     git clone https://github.com/ariannelafraise/hivesec.git /usr/local/src/hivesec
 fi
-cd /usr/local/src/hivesec
 printf "%b[ OK ]%b Repository ready\n" "$C_GREEN" "$C_RESET"
 
 printf "%b==>%b Installing application files...\n" "$C_MAGENTA" "$C_RESET"
 rm -rf /usr/local/lib/hivesec
 mkdir -p /usr/local/lib/hivesec
-cp -r core /usr/local/lib/hivesec/
-cp -r api /usr/local/lib/hivesec/
-cp __version__.py hivectl.py hivesecd.py /usr/local/lib/hivesec/
+cp -r /usr/local/src/hivesec /usr/local/lib/hivesec
 printf "%b[ OK ]%b Files copied\n" "$C_GREEN" "$C_RESET"
 
 printf "%b==>%b Creating Python virtual environment...\n" "$C_MAGENTA" "$C_RESET"
@@ -86,7 +83,7 @@ if [[ ! -f /etc/hivesec/apps ]]; then
 fi
 printf "%b[ OK ]%b System directories ready\n" "$C_GREEN" "$C_RESET"
 
-printf "\033[38;5;183m==>\033[0m Setting secure permissions...\n"
+printf "%b==>%b Setting secure permissions...\n" "$C_MAGENTA" "$C_RESET"
 # Ensure root ownership
 chown -R root:root /usr/local/lib/hivesec
 chown root:root /usr/local/bin/hivectl
@@ -108,11 +105,6 @@ chmod 755 /usr/local/bin/hivectl
 chmod 700 /etc/hivesec
 chmod 600 /etc/hivesec/apps
 chmod 700 /var/log/hivesec
-printf "\033[38;5;150m[ OK ]\033[0m Permissions applied\n"
-
-printf "%b==>%b Cleaning up...\n" "$C_MAGENTA" "$C_RESET"
-cd /
-rm -rf /usr/local/src/hivesec
-printf "%b[ OK ]%b Cleanup complete\n" "$C_GREEN" "$C_RESET"
+printf "%b[ OK ]%b Permissions applied\n" "$C_GREEN" "$C_RESET"
 
 printf "%bInstallation complete.%b\n" "$C_GREEN" "$C_RESET"
