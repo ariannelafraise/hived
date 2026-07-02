@@ -34,3 +34,13 @@ Load config:
 ```bash
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
+
+## Uninstalling or updating
+Uninstall script:
+```bash
+sudo /usr/local/src/hivesec/uninstall.sh
+```
+Update script:
+```bash
+sudo /usr/local/src/hivesec/update.sh
+```
