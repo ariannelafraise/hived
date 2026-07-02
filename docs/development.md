@@ -4,19 +4,24 @@
 > You are strongly encouraged to read the python package source code (in the `api/` directory) to better understand the classes and methods available.
 > It is very well documented and serves as a usage documentation. The following documentation aims to be a simple introduction to help grasp the basics.
 
-## Installing the API
-First, to develop HiveSec applications, install the `hivesec` Python package. It provides the framework and developer interface for building applications on top of HiveSec.
+## How to make applications
+HiveSec applications can contain anything, as long as python files containing event handlers and/or hivectl plugins are present in the codebase.
+At boot, the HiveSec daemon will scan each application directory registered in `/etc/hivesec/apps` and load any Python class extending `AuditEventHandler` or `HivectlPlugin`. Your entire application can be in Python, or just the event handling entrypoint. There is no specific application structure: just add a python file with a handler or plugin anywhere in the application's directory and it will be found and loaded by HiveSec.
+
+### Installing dependencies
+First, to develop HiveSec applications, install the `hivesec` Python package. It provides the framework and developer interface for building applications on top of HiveSec. Since HiveSec runs the application code in its own virtual environment, it's not actually needed to install it, but it is useful to install it for the language server (LSP).
 
 ```bash
 pip install hivesec
 ```
 
-## How to make applications
-HiveSec applications can contain anything, as long as python files containing event handlers and/or hivectl plugins are present in the codebase.
-At boot, the HiveSec daemon will scan each application directory registered in `/etc/hivesec/apps` and load any Python class extending `AuditEventHandler` or `HivectlPlugin`. Your entire application can be in Python, or just the event handling entrypoint. There is no specific application structure: just add a python file with a handler or plugin anywhere in the application's directory and it will be found and loaded by HiveSec.
+Since HiveSec runs the application code in its own virtual environment, install any Python dependencies like this:
+```bash
+sudo hivectl -pip <package>
+```
 
 > [!IMPORTANT]
-> Make sure to always use absolute paths, since your code will be executed from a different working directory.
+> Always use absolute paths, since the application code will be executed from a different working directory.
 
 > [!CAUTION]
 > Make sure that the directory containing your application is well protected with permissions to prevent bad
@@ -33,8 +38,9 @@ class MyHoneypotHandler(AuditEventHandler):
     def matches(self, event: AuditEvent) -> bool: 
         # Gets called by the event dispatcher to verify if the handler wants the event
         for record in event.records:
-            if "honeypot" != record.get_field_value("key"):
-                return False
+            if record.has_field("key"):
+                if "honeypot" != record.get_field_value("key"):
+                    return False
         return True
     
     def handle(self, event: AuditEvent):
@@ -42,7 +48,7 @@ class MyHoneypotHandler(AuditEventHandler):
         print(f"Handling security event with {len(event.records)} records")
 ```
 
-Event handlers receive `AuditEvent` objects, which are groups of records (`AuditRecord`) belonging to the same security event. `AuditRecord` fields are put into a Python dictionary. The keys and values are kept intact from the original log string, only the '=' sign between the two is removed.
+Event handlers receive `AuditEvent` objects, which are groups of records (`AuditRecord`) belonging to the same security event. `AuditRecord` fields are put into a Python dictionary.
 
 > [!TIP]
 > Use `record.json()` to retrieve the record in JSON format.
@@ -57,7 +63,7 @@ would give:
 {
   "msg": "audit(1766092657.249:131):",
   "item": "0",
-  "name": "\"/etc/shadow\""
+  "name": "/etc/shadow"
 }
 ```
 
@@ -116,15 +122,10 @@ sudo hivectl --register ABSOLUTE_PATH
 
 2. Reboot to let HiveSec detect and load your new application.
 
-
-### Using python libraries
-To use python libraries in an HiveSec application, install it in the virtual environment used by HiveSec:
-```bash
-sudo /usr/local/lib/hivesec/.venv/bin/pip install <package>
-```
-
 ## Testing
 Testing with real event triggers is difficult and time-consuming. Instead, use the `test-launch.sh` script to inject specific log records into HiveSec.
+
+0. If not already done, create a Python virtual environment in `.venv` with `python -m venv .venv`. This will be used/needed by the `test-launch.sh` script. Since the HiveSec daemon will be ran from this venv, install any needed dependencies to it with `.venv/bin/pip install`
 
 1. Create a file containing the sample of logs you want to use to test
 
