@@ -44,6 +44,9 @@ def _explore_dir(base_class: type, path: str) -> list[Any]:
     classes = []
     if path.split("/")[-1].startswith("."):
         return classes
+    
+    if not os.path.isdir(path):
+        return []
 
     for item in os.listdir(path):
         if os.path.isdir(f"{path}/{item}"):

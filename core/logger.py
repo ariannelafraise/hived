@@ -64,6 +64,7 @@ def info(log: str, source: str, file_name: str = "hivesec.log") -> None:
     """
     logger = _get_logger(file_name)
     logger.info(f"{str(datetime.now())} | {source} | {log}")
+    print(f"{str(datetime.now())} | {source} | {log}")
 
 
 def error_traceback(traceback: str) -> None:
@@ -75,3 +76,4 @@ def error_traceback(traceback: str) -> None:
     """
     logger = _get_logger("error_traceback.log")
     logger.error(f"{str(datetime.now())} | {traceback}")
+    print(f"{str(datetime.now())} | {traceback}")

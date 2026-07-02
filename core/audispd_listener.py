@@ -36,10 +36,11 @@ class AudispdListener(AuditEventDispatcher):
             line = sys.stdin.readline()
 
             if (
-                not line
+                not line or line == ""
             ):  # happens when testing: EOF occurs, which would never happen in real usage
                 if records:
                     self._notify_observers(AuditEvent(records))
+                break
 
             cleaned_event_string = parsing.clean_audit_event_string(line)
             fields = parsing.parse_audit_event_fields(cleaned_event_string)
