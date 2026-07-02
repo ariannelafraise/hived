@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 import json
 from typing import Any
 
@@ -12,7 +10,7 @@ class AuditEvent:
         records: a list of all records associated with the event
     """
 
-    def __init__(self, records: list[AuditRecord]) -> None:
+    def __init__(self, records: list["AuditRecord"]) -> None:
         self.records = records
 
 
@@ -40,7 +38,7 @@ class AuditRecord:
     def json(self):
         return json.dumps(self._fields, indent=4)
 
-    def get_field_value(self, field: str) -> str:
+    def get_field_value(self, field: str) -> Any:
         """
         Returns the value of a field, or None if the field is not present in the record. Supports dot notation for subfields.
 

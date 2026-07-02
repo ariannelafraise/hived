@@ -8,3 +8,4 @@ api/dist/
 api/build/
 test.py
 samples/
+.opencode/
