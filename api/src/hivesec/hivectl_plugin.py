@@ -82,9 +82,6 @@ class HivectlPlugin(ABC):
             return
         with open(self._rules_file_path, "w") as rules_file:
             rules_file.write("")
-        subprocess.run(
-            ["auditctl", "-D"], stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT
-        )
         self._reload_rules()
 
     def _reload_rules(self) -> None:
