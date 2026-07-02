@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from typing import Any
 
 
 class AuditEvent:
@@ -29,7 +30,7 @@ class AuditRecord:
         _fields: the record's fields in a dictionary
     """
 
-    def __init__(self, record_string: str, fields: dict[str, str]) -> None:
+    def __init__(self, record_string: str, fields: dict[str, Any]) -> None:
         self._as_string = record_string
         self._fields = fields
 
@@ -41,21 +42,42 @@ class AuditRecord:
 
     def get_field_value(self, field: str) -> str:
         """
-        Returns the value of a field, or None if the field is not present in the record.
-        For better clarity and for better consistency with Audit logs, the values' surrounding quotes are kept.
+        Returns the value of a field, or None if the field is not present in the record. Supports dot notation for subfields.
 
         Parameters:
             field: the queried field
         """
-        if field not in self._fields:
-            raise ValueError(f"Record is missing '{field}' field: {str(self)}")
-        return self._fields[field]
+        parts = field.split(".")
+        current = self._fields
+
+        for p in parts:
+            if not isinstance(current, dict):
+                raise ValueError(f"Field '{field}' does not resolve to a value: {self}")
+
+            if p not in current:
+                raise ValueError(f"Record is missing '{field}' field: {self}")
+
+            current = current[p]
+
+        return current
 
     def has_field(self, field: str) -> bool:
         """
-        Checks whether a field exists in the record.
+        Checks whether a field exists in the record. Supports dot notation for subfields.
 
         Parameters:
             field: the field to check
         """
-        return field in self._fields
+        parts = field.split(".")
+        current = self._fields
+
+        for p in parts:
+            if not isinstance(current, dict):
+                return False
+
+            if p not in current:
+                return False
+
+            current = current[p]
+
+        return True
