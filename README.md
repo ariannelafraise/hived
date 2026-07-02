@@ -1,4 +1,4 @@
-![Logo](./media/hivesec-square.png)
+![Logo](./media/hivesec.png)
 
 # HiveSec
 
